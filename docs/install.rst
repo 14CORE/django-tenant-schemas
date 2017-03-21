@@ -102,11 +102,7 @@ Now we have to create your tenant model. Your tenant model can contain whichever
         # default true, schema will be automatically created and synced when it is saved
         auto_create_schema = True
 
-Once you have defined your model, don't forget to create the migrations for it or otherwise Django >= 1.9 will not create its table. Replace ``customers`` with your app name.
-
-.. code-block:: bash
-
-    python manage.py makemigrations customers
+Before creating the migrations, we must configure a few specific settings.
 
 Configure Tenant and Shared Applications
 ========================================
@@ -156,7 +152,13 @@ You also have to set where your tenant model is.
 
     TENANT_MODEL = "customers.Client" # app.Model
 
-Now run ``migrate_schemas --shared`` to create the shared apps on the ``public`` schema. Note: your database should be empty if this is the first time you're running this command.
+Now you can create your app migrations, ``customers`` in our case (otherwise Django >= 1.9 will not create its table):
+
+.. code-block:: bash
+
+    python manage.py makemigrations customers
+
+The command ``migrate_schemas --shared`` will create the shared apps on the ``public`` schema. Note: your database should be empty if this is the first time you're running this command.
 
 .. code-block:: bash
 
